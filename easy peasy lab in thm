@@ -1,0 +1,169 @@
+TryHackMe Walkthrough: Easy Peasy
+
+By Adhith
+
+Introduction
+
+The Easy Peasy room on TryHackMe is a beginner-friendly Capture The Flag (CTF) challenge that focuses on basic web enumeration, hidden directories, file analysis, and simple exploitation techniques.
+
+This lab is ideal for beginners who want to practice real-world penetration testing concepts in a controlled environment.
+
+Objective
+
+The goal of this room is to enumerate the target machine, discover hidden resources, and capture multiple flags by exploiting weak configurations.
+
+Tools Used
+
+During this lab, the following tools were used:
+
+Nmap
+
+Gobuster
+
+Dirb
+
+Steghide
+
+Strings
+
+Netcat
+
+Task 1: Initial Reconnaissance
+Step 1: Nmap Scan
+
+The first step is to scan the target machine for open ports.
+
+nmap -sC -sV <target-ip>
+Result
+
+The scan reveals multiple open ports such as:
+
+Port 80 (HTTP)
+
+Other possible services depending on the machine
+
+Key Learning
+
+Nmap helps identify open ports and running services, which is the foundation of enumeration.
+
+Task 2: Web Enumeration
+Step 2: Directory Brute Force
+
+To find hidden directories:
+
+gobuster dir -u http://<target-ip> -w /usr/share/wordlists/dirb/common.txt
+Result
+
+Hidden directories and files are discovered. These often contain clues or flags.
+
+Key Learning
+
+Web enumeration is crucial for discovering hidden attack surfaces.
+
+Task 3: Hidden Files and Clues
+Step 3: Inspect Website Content
+
+View page source
+
+Look for hidden comments
+
+Check unusual file paths
+
+Result
+
+Flags or hints are often hidden in:
+
+<!-- hidden_flag -->
+Key Learning
+
+Always check frontend code before moving to advanced techniques.
+
+Task 4: File Analysis
+Step 4: Download and Analyze Files
+
+Some directories contain downloadable files such as images or text files.
+
+Use:
+
+file filename
+strings filename
+Result
+
+Hidden information or encoded data is revealed.
+
+Key Learning
+
+Files often contain embedded data that can lead to flags.
+
+Task 5: Steganography
+Step 5: Extract Hidden Data from Images
+
+If an image is found, analyze it:
+
+steghide extract -sf image.jpg
+
+If needed:
+
+binwalk -e image.jpg
+Result
+
+Hidden files or passwords are extracted.
+
+Key Learning
+
+Steganography is commonly used to hide sensitive data in CTF challenges.
+
+Task 6: Gaining Access
+Step 6: Use Credentials or Clues
+
+Using previously found hints, attempt access via:
+
+Login pages
+
+Services
+
+Hidden endpoints
+
+Example
+nc <target-ip> <port>
+Result
+
+Access is gained, revealing more flags.
+
+Task 7: Capturing Flags
+
+Throughout the lab, multiple flags are captured by:
+
+Decoding hidden messages
+
+Exploring directories
+
+Extracting data from files
+
+Each flag follows a specific format and confirms progress.
+
+Challenges Faced
+
+Identifying hidden directories
+
+Understanding encoded data
+
+Extracting data from images
+
+These challenges help build a strong problem-solving mindset.
+
+Key Takeaways
+
+Enumeration is the most important step
+
+Small clues can lead to big discoveries
+
+Always analyze files thoroughly
+
+Combine multiple techniques to solve challenges
+
+Conclusion
+
+The Easy Peasy room is a great starting point for beginners in cybersecurity. It reinforces core skills such as enumeration, file analysis, and basic exploitation.
+
+By completing this room, you gain practical experience that is essential for more advanced penetration testing labs.
