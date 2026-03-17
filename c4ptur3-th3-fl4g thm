@@ -1,0 +1,259 @@
+TryHackMe Walkthrough: c4ptur3-th3-fl4g
+
+By Adhith
+
+Introduction
+
+The c4ptur3-th3-fl4g room on TryHackMe is a beginner-friendly challenge focused on fundamental Capture The Flag (CTF) techniques. It introduces basic concepts such as encoding, hashing, steganography, and simple web exploitation.
+
+This room is ideal for those starting in cybersecurity and looking to build problem-solving skills through hands-on tasks.
+
+Objective
+
+The main goal of this room is to find multiple flags by solving different types of challenges. Each task requires a different approach, testing knowledge in:
+
+Encoding and decoding
+
+Cryptography basics
+
+Steganography
+
+File analysis
+
+Web-based enumeration
+
+Task 1: Introduction
+
+This task simply introduces the lab. No flag is required here. It provides an overview of what to expect and encourages a problem-solving mindset.
+
+Task 2: Base64 Decoding
+Challenge
+
+A string is provided, and the goal is to decode it.
+
+Approach
+
+The format of the string indicates it is encoded in Base64. This can be identified because Base64 strings often end with = or ==.
+
+Solution
+
+Using a tool like:
+
+Linux command:
+
+echo "encoded_string" | base64 -d
+
+Or online decoders, we decode the string and retrieve the flag.
+
+Key Learning
+
+Understanding common encoding schemes like Base64 is essential in CTF challenges.
+
+Task 3: ROT Cipher
+Challenge
+
+A text is encoded using a rotation cipher.
+
+Approach
+
+ROT ciphers shift letters by a fixed number. The most common is ROT13.
+
+Solution
+
+Using tools like rot13 or CyberChef, we rotate the text until it becomes readable.
+
+Example:
+
+echo "encoded_text" | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+Key Learning
+
+Recognizing simple substitution ciphers is important in early-stage CTFs.
+
+Task 4: Hex Decoding
+Challenge
+
+A hexadecimal string is given.
+
+Approach
+
+Hex encoding represents ASCII values in base 16.
+
+Solution
+
+Decode using:
+
+echo "hex_string" | xxd -r -p
+Key Learning
+
+Hex decoding is frequently used in challenges involving data representation.
+
+Task 5: Hidden File (Steganography)
+Challenge
+
+An image file is provided, and the flag is hidden inside.
+
+Approach
+
+We inspect the file for hidden data.
+
+Tools Used
+
+strings
+
+binwalk
+
+steghide
+
+Solution
+
+Check for readable strings:
+
+strings image.jpg
+
+Extract hidden files:
+
+binwalk -e image.jpg
+
+Try steghide:
+
+steghide extract -sf image.jpg
+
+Eventually, the hidden flag is revealed.
+
+Key Learning
+
+Steganography hides data within files, commonly images.
+
+Task 6: Hash Cracking
+Challenge
+
+A hash is provided, and we need to find the original value.
+
+Approach
+
+Identify the hash type (MD5, SHA1, etc.).
+
+Solution
+
+Use online tools or local tools like hashcat or john.
+
+Example:
+
+john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt
+
+Or use CrackStation.
+
+Key Learning
+
+Hash cracking relies heavily on wordlists and understanding hash types.
+
+Task 7: File Analysis
+Challenge
+
+A file is given, but its content is not obvious.
+
+Approach
+
+Use file inspection tools:
+
+file filename
+
+This helps determine file type.
+
+Solution
+
+If compressed:
+
+unzip file.zip
+
+If encoded:
+
+strings filename
+Key Learning
+
+Always identify the file type before interacting with it.
+
+Task 8: Hidden Directory (Web Enumeration)
+Challenge
+
+A website is provided, and we must find hidden directories.
+
+Approach
+
+Use directory brute-forcing tools.
+
+Tools Used
+
+gobuster
+
+dirb
+
+Solution
+gobuster dir -u http://target-url -w /usr/share/wordlists/dirb/common.txt
+
+This reveals hidden paths where the flag is stored.
+
+Key Learning
+
+Web enumeration is a critical skill in penetration testing.
+
+Task 9: Inspect Element
+Challenge
+
+The flag is hidden within the webpage.
+
+Approach
+
+View page source or inspect elements.
+
+Solution
+
+Right-click → Inspect → Check HTML comments or hidden tags.
+
+Sometimes flags are inside:
+
+<!-- flag here -->
+Key Learning
+
+Always check the frontend before assuming complexity.
+
+Task 10: Final Challenge
+Challenge
+
+A combination of techniques is required.
+
+Approach
+
+This task tests everything learned:
+
+Decode strings
+
+Analyze files
+
+Use enumeration
+
+Crack hashes
+
+Solution
+
+By combining previous methods, the final flag is discovered.
+
+Conclusion
+
+The c4ptur3-th3-fl4g room is an excellent starting point for beginners in cybersecurity. It introduces essential techniques used in real-world CTFs and penetration testing.
+
+Skills Gained
+
+Encoding and decoding techniques
+
+Basic cryptography
+
+Steganography fundamentals
+
+File analysis
+
+Web enumeration
+
+Final Thoughts
+
+Consistency and curiosity are key in cybersecurity. Rooms like this build a strong foundation for more advanced challenges.
