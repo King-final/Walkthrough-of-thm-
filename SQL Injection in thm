@@ -1,0 +1,208 @@
+# TryHackMe SQL Injection Lab Walkthrough (Task 1–10)
+
+## Author: Adhith
+
+---
+
+## Introduction
+
+When I started this SQL Injection lab on TryHackMe, I already had a basic understanding of databases, but this room helped me clearly understand how attackers exploit vulnerabilities in real-world applications.
+
+SQL Injection (SQLi) is a technique where an attacker manipulates input fields to execute unintended SQL queries. In simple terms, if a website does not properly validate user input, it can be tricked into giving access to sensitive data.
+
+In this walkthrough, I explain Tasks 1 to 10 in a simple and practical way based on my experience completing the lab.
+
+---
+
+## Task 1 — Introduction
+
+This task introduces SQL Injection and why it is important.
+
+Web applications use databases to store user information such as usernames and passwords. When a user enters data into a login form, that input is included in a database query.
+
+If the input is not handled correctly, it is possible to change the logic of the query. This is the core idea behind SQL Injection.
+
+---
+
+## Task 2 — Understanding Databases
+
+In this task, I learned how data is organized in a database.
+
+A database contains:
+
+* Tables (for example, users or products)
+* Rows (individual records)
+* Columns (fields such as username and password)
+
+For example, a "users" table may contain:
+
+* id
+* username
+* password
+
+Understanding this structure is essential for performing SQL Injection attacks.
+
+---
+
+## Task 3 — What is SQL?
+
+SQL stands for Structured Query Language, which is used to interact with databases.
+
+Common SQL commands include:
+
+* SELECT — retrieve data
+* INSERT — add data
+* UPDATE — modify data
+* DELETE — remove data
+
+Example:
+SELECT username FROM users;
+
+This command retrieves all usernames from the users table.
+
+---
+
+## Task 4 — What is SQL Injection?
+
+This task explains how SQL Injection works.
+
+A normal login query looks like this:
+
+SELECT * FROM users WHERE username = 'admin' AND password = '1234';
+
+If input is not properly validated, an attacker can enter something like:
+
+' OR 1=1 --
+
+This makes the condition always true, allowing login without valid credentials.
+
+---
+
+## Task 5 — Authentication Bypass
+
+In this task, I performed a login bypass using SQL Injection.
+
+Payload used:
+
+' OR '1'='1
+
+This works because the condition '1'='1' is always true. As a result, the database returns a valid response and grants access without checking the actual credentials.
+
+---
+
+## Task 6 — Extracting Data
+
+After bypassing authentication, the next step was to extract data from the database.
+
+I used the UNION operator:
+
+' UNION SELECT null, username, password FROM users --
+
+This combines the original query with another query that retrieves usernames and passwords.
+
+It is important that the number of columns in both queries match, otherwise the query will fail.
+
+---
+
+## Task 7 — Finding Number of Columns
+
+Before using UNION effectively, I needed to determine the number of columns in the original query.
+
+I used ORDER BY:
+
+' ORDER BY 1 --
+' ORDER BY 2 --
+' ORDER BY 3 --
+
+When an error occurs, it indicates that the column number is too high. The highest number that works without error reveals the correct column count.
+
+---
+
+## Task 8 — UNION-Based Injection
+
+After identifying the number of columns, I performed a proper UNION-based injection.
+
+First test:
+
+' UNION SELECT 1,2,3 --
+
+Then replaced values with actual data:
+
+' UNION SELECT 1, username, password FROM users --
+
+This displayed usernames and passwords directly on the webpage.
+
+---
+
+## Task 9 — Database Enumeration
+
+In this task, I explored the structure of the database.
+
+Examples used:
+
+To get database name:
+' UNION SELECT database(), null --
+
+To list tables:
+' UNION SELECT table_name, null FROM information_schema.tables --
+
+To list columns:
+' UNION SELECT column_name, null FROM information_schema.columns WHERE table_name='users' --
+
+This allowed me to understand the database layout completely.
+
+---
+
+## Task 10 — Blind SQL Injection
+
+This task focused on Blind SQL Injection, where no direct output is visible.
+
+Instead, I observed differences in responses.
+
+Examples:
+
+' AND 1=1 --
+' AND 1=2 --
+
+By comparing responses, I determined whether conditions were true or false.
+
+To extract data:
+
+' AND SUBSTRING(database(),1,1)='a' --
+
+This method allows data extraction one character at a time.
+
+---
+
+## How to Prevent SQL Injection
+
+To prevent SQL Injection, the following practices should be used:
+
+* Use prepared statements (parameterized queries)
+* Validate and sanitize all user inputs
+* Avoid directly inserting user input into SQL queries
+* Use secure frameworks or ORM tools
+* Apply least privilege access to the database
+
+---
+
+## Conclusion
+
+This SQL Injection lab provided a clear understanding of how vulnerabilities can be exploited step by step.
+
+From bypassing authentication to extracting sensitive information, each task demonstrated a practical aspect of SQL Injection.
+
+It also highlighted the importance of secure coding practices to prevent such attacks.
+
+---
+
+## Final Thoughts
+
+SQL Injection is one of the most critical vulnerabilities in web applications. Learning how it works is essential for anyone interested in cybersecurity or web penetration testing.
+
+This lab serves as a strong foundation for understanding real-world attack techniques and defense mechanisms.
+
+---
+
+Written by Adhith
+For educational purposes only
