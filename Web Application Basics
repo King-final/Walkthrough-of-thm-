@@ -1,0 +1,187 @@
+TryHackMe Walkthrough: Web Application Basics
+
+By Adhith
+
+Introduction
+
+The Web Application Basics room on TryHackMe introduces the fundamental concepts behind how web applications function and how users interact with them. It builds on basic web knowledge and moves towards understanding how data flows between clients and servers.
+
+This room is essential for beginners who want to move into web application security and penetration testing.
+
+Objective
+
+The goal of this room is to understand:
+
+How web applications work
+
+The role of HTTP requests and responses
+
+GET vs POST methods
+
+Parameters and user input
+
+Basic concepts used in web exploitation
+
+Task 1: What is a Web Application?
+
+A web application is a program that runs on a web server and interacts with users through a browser.
+
+Examples
+
+Login pages
+
+Search forms
+
+Online shopping websites
+
+Key Learning
+
+Web applications process user input and return dynamic responses.
+
+Task 2: HTTP Requests
+What is an HTTP Request?
+
+An HTTP request is sent from the client (browser) to the server to request data.
+
+Example
+GET /login HTTP/1.1
+Host: example.com
+Components
+
+Method (GET, POST)
+
+URL
+
+Headers
+
+Body (optional)
+
+Task 3: HTTP Responses
+What is an HTTP Response?
+
+The server sends back a response after processing the request.
+
+Example
+HTTP/1.1 200 OK
+Content-Type: text/html
+Common Status Codes
+
+200 → OK
+
+404 → Not Found
+
+500 → Server Error
+
+Key Learning
+
+Responses tell us whether a request was successful or failed.
+
+Task 4: GET vs POST
+GET Method
+
+Sends data through the URL
+
+Visible in the browser
+
+Used for retrieving data
+
+Example:
+
+http://example.com/search?q=test
+POST Method
+
+Sends data in the request body
+
+Not visible in URL
+
+Used for submitting data
+
+Key Learning
+
+Understanding GET and POST is important for identifying vulnerabilities.
+
+Task 5: URL Parameters
+What are Parameters?
+
+Parameters pass data to the server through the URL.
+
+Example
+http://example.com/page?id=1
+Key Learning
+
+User-controlled parameters are common entry points for attacks.
+
+Task 6: User Input and Security
+Why is User Input Important?
+
+Web applications accept input from users, which can be manipulated.
+
+Risks
+
+Injection attacks
+
+Data manipulation
+
+Unauthorized access
+
+Key Learning
+
+Always validate and sanitize user input.
+
+Task 7: Cookies
+What are Cookies?
+
+Cookies store user data in the browser.
+
+Uses
+
+Session management
+
+Authentication
+
+Tracking
+
+Key Learning
+
+Cookies can sometimes be exploited if not properly secured.
+
+Task 8: Developer Tools
+Browser DevTools
+
+Used to inspect and modify web requests.
+
+Features
+
+View requests and responses
+
+Modify parameters
+
+Debug web applications
+
+Key Learning
+
+Developer tools are essential for analyzing web behavior.
+
+Task 9: Final Summary
+
+This room focuses on understanding how web applications function rather than exploiting them.
+
+Key Takeaways
+
+Web applications rely on HTTP communication
+
+Requests and responses form the backbone of web interaction
+
+GET and POST methods handle data differently
+
+Parameters are critical in data exchange
+
+User input must always be validated
+
+Cookies manage sessions and user state
+
+Conclusion
+
+The Web Application Basics room is a crucial step for beginners moving into web security. It provides the foundational knowledge required to understand how vulnerabilities arise in real-world applications.
+
+Mastering these concepts will make it easier to learn advanced topics like SQL Injection, XSS, and authentication bypass.
