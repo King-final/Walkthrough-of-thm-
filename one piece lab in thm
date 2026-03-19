@@ -1,0 +1,158 @@
+One Piece TryHackMe Walkthrough
+
+A Beginner-Friendly CTF Write-up
+
+Introduction
+
+The One Piece room on TryHackMe is a beginner-level Capture The Flag (CTF) challenge designed to test fundamental skills in web enumeration, exploitation, and privilege escalation.
+
+This room is themed around the popular anime One Piece, making it engaging while still delivering core cybersecurity learning.
+
+In this walkthrough, I will explain each step clearly, from initial reconnaissance to gaining full system access.
+
+Room Overview
+
+Difficulty: Easy
+
+Type: Boot2Root
+
+Skills Required:
+
+Basic Linux commands
+
+Web enumeration
+
+Understanding of common vulnerabilities
+
+Step 1: Initial Reconnaissance
+
+Start by scanning the target machine using Nmap:
+
+nmap -sC -sV -oN scan.txt <TARGET_IP>
+Key Findings:
+
+Open ports (commonly HTTP and SSH)
+
+Service versions detected
+
+This step helps identify entry points into the system.
+
+Step 2: Web Enumeration
+
+After discovering an HTTP service, open the IP address in your browser.
+
+Observations:
+
+A themed webpage related to One Piece
+
+Possible hidden directories
+
+Use Gobuster to enumerate directories:
+
+gobuster dir -u http://<TARGET_IP>/ -w /usr/share/wordlists/dirb/common.txt
+Important Discovery:
+
+Hidden directories such as /admin, /images, or /uploads
+
+These directories often contain sensitive files or login portals.
+
+Step 3: Finding Credentials
+
+While exploring directories, you may find:
+
+Text files
+
+Comments in source code
+
+Hidden credentials
+
+Check page source:
+
+Ctrl + U
+
+Look for:
+
+Usernames
+
+Passwords
+
+Hints
+
+Step 4: Gaining Initial Access
+
+Using discovered credentials, attempt login via:
+
+Web login panel
+
+SSH service
+
+Example:
+
+ssh username@<TARGET_IP>
+
+If successful, you now have initial access to the system.
+
+Step 5: Privilege Escalation
+
+Once inside the machine, check for privilege escalation vectors.
+
+Basic Enumeration Commands:
+whoami
+id
+sudo -l
+Key Checks:
+
+Sudo permissions
+
+Writable files
+
+SUID binaries
+
+If sudo -l shows allowed commands, exploit them to gain root access.
+
+Step 6: Capturing the Flags
+
+Locate important files:
+
+find / -name "*.txt" 2>/dev/null
+
+Typical flags:
+
+user.txt
+
+root.txt
+
+Read them using:
+
+cat user.txt
+cat root.txt
+Key Learning Points
+
+Importance of enumeration before exploitation
+
+How hidden directories can expose sensitive data
+
+Basic privilege escalation techniques
+
+Real-world simulation of attack workflow
+
+Conclusion
+
+The One Piece room on TryHackMe is an excellent starting point for beginners. It teaches the importance of patience, enumeration, and thinking creatively while solving CTF challenges.
+
+If you are new to cybersecurity, this room is a great way to build confidence and practical skills.
+
+Suggested Thumbnail Ideas
+
+Pirate-themed hacker illustration (dark mode)
+
+Skull with terminal code background
+
+Luffy-style silhouette with cybersecurity elements
+
+Terminal screen with “Access Granted” in anime theme
+
+Author
+
+Adhith
+Cybersecurity Enthusiast | TryHackMe Learner
