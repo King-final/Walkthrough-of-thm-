@@ -1,0 +1,134 @@
+🧪 Pickle Rick TryHackMe Walkthrough (Full Report)
+📌 Introduction
+
+The Pickle Rick room on TryHackMe is a beginner-friendly Capture The Flag (CTF) challenge inspired by the popular Rick and Morty series. The objective is to help Rick turn himself back into a human by finding three secret ingredients hidden within a vulnerable web server.
+
+This lab focuses on:
+
+Web enumeration
+Command injection
+Basic Linux privilege usage
+🎯 Objective
+
+Retrieve the following three ingredients:
+
+First ingredient
+Second ingredient
+Third ingredient
+🔍 Step 1: Reconnaissance
+
+Start by accessing the target machine’s IP address in your browser.
+
+Key Observations:
+A simple web page appears with a message from Rick.
+Viewing the page source reveals a username.
+Username: R1ckRul3s
+
+This is a common technique where sensitive data is exposed in HTML comments or source code.
+
+🔎 Step 2: Directory Enumeration
+
+Next, we perform directory brute-forcing to find hidden endpoints.
+
+Tool Used:
+gobuster dir -u http://<IP> -w /usr/share/wordlists/dirb/common.txt
+Important Findings:
+/login.php
+/robots.txt
+🤖 Step 3: robots.txt
+
+Accessing /robots.txt reveals a password:
+
+Password: Wubbalubbadubdub
+
+Now we have:
+
+Username: R1ckRul3s
+Password: Wubbalubbadubdub
+🔐 Step 4: Login Portal
+
+Navigate to /login.php and log in using the credentials.
+
+After login, you gain access to a command panel.
+
+💻 Step 5: Command Execution
+
+The panel allows command execution, but some commands are restricted.
+
+Example:
+ls
+
+This lists files in the directory.
+
+🧂 Step 6: Finding Ingredients
+➤ First Ingredient
+cat Sup3rS3cretPickl3Ingred.txt
+
+Output:
+
+mr. meeseeks hair
+➤ Navigating the System
+
+Since cat may be blocked later, use alternatives like:
+
+less
+more
+strings
+
+Or move directories:
+
+cd /home
+ls
+➤ Second Ingredient
+
+Navigate to Rick’s home directory:
+
+cd /home/rick
+ls
+
+Then read the file:
+
+cat second ingredients
+
+Output:
+
+1 jerry tear
+➤ Third Ingredient
+
+Check the root directory:
+
+cd /
+ls
+
+Look for interesting folders like /root.
+
+cd /root
+ls
+
+Then:
+
+cat 3rd.txt
+
+Output:
+
+fleeb juice
+🏁 Final Ingredients Collected
+Ingredient Number	Value
+First	mr. meeseeks hair
+Second	1 jerry tear
+Third	fleeb juice
+🧠 Key Learnings
+Importance of checking page source for hidden data
+Using directory brute-forcing tools like Gobuster
+Understanding command injection vulnerabilities
+Navigating Linux systems effectively
+Bypassing restricted commands using alternatives
+📝 Conclusion
+
+The Pickle Rick room is an excellent starting point for beginners in ethical hacking. It introduces core concepts like enumeration and command execution in a fun and engaging way.
+
+By completing this lab, you gain hands-on experience in:
+
+Web exploitation basics
+Linux command-line usage
+CTF methodology
